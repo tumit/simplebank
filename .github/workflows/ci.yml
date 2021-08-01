@@ -27,9 +27,26 @@ jobs:
           curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
           dep ensure
         fi
+
+    - name: Run migrations
+      run: make migration
+
     - name: Build
       run: go build -v .
 
     - name: Test
       run: make test
+
+services:
+  postgres:
+    image: postgres:12
+    env:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: simple_bank
+    options:
+      --health-cmd pg_isready
+      --health-interval 10s
+      --health-timeout 5s
+      --health-retries 3
 
