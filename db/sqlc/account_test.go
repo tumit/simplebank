@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	"tumit.ga/play/simplebank/db/util"
+	"tumit.ga/simplebank/db/util"
 )
 
 func TestListAccounts(t *testing.T) {
