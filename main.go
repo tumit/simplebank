@@ -7,6 +7,7 @@ import (
 	_ "github.com/lib/pq"
 	"tumit.ga/simplebank/api"
 	db "tumit.ga/simplebank/db/sqlc"
+	"tumit.ga/simplebank/util"
 )
 
 const (
@@ -17,7 +18,12 @@ const (
 
 func main() {
 
-	conn, err := sql.Open(dbDriver, dbSource)
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("cannot load config:", err)
+	}
+
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatal("connot connect to db:", err)
 	}
