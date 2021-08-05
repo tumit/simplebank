@@ -1,6 +1,9 @@
 {
   "cSpell.words": [
+    "gomock",
+    "mockdb",
     "oneof",
-    "sqlc"
+    "sqlc",
+    "stretchr"
   ]
 }
