@@ -1,11 +1,8 @@
 package api
 
 import (
-	"bytes"
 	"database/sql"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -14,10 +11,10 @@ import (
 	"github.com/stretchr/testify/require"
 	mockdb "tumit.ga/simplebank/db/mock"
 	db "tumit.ga/simplebank/db/sqlc"
-	"tumit.ga/simplebank/util"
 )
 
 func TestGetAccount(t *testing.T) {
+
 	account := randomAccount()
 
 	testCases := []struct {
@@ -100,24 +97,5 @@ func TestGetAccount(t *testing.T) {
 			tc.checkResponse(t, recorder)
 
 		})
-	}
-}
-
-func requireBodyMatchAccount(t *testing.T, body *bytes.Buffer, account db.Account) {
-	data, err := ioutil.ReadAll(body)
-	require.NoError(t, err)
-
-	var gotAccount db.Account
-	err = json.Unmarshal(data, &gotAccount)
-	require.NoError(t, err)
-	require.Equal(t, account, gotAccount)
-}
-
-func randomAccount() db.Account {
-	return db.Account{
-		ID:       util.RandomInt(1, 1000),
-		Owner:    util.RandomOwner(),
-		Balance:  util.RandomMoney(),
-		Currency: util.RandomCurrency(),
 	}
 }
